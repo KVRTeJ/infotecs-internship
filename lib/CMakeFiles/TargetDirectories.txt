@@ -1,7 +1,0 @@
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/lib.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/edit_cache.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/rebuild_cache.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/list_install_components.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/install.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/install/local.dir
-/Users/dmitriy/git/infotecs-internship/lib/CMakeFiles/install/strip.dir

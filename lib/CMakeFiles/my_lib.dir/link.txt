@@ -1,1 +1,0 @@
-/usr/bin/llvm-g++ -DQT_QML_DEBUG -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -mmacosx-version-min=13.6 -dynamiclib -Wl,-headerpad_max_install_names -o libmy_lib.dylib -install_name @rpath/libmy_lib.dylib CMakeFiles/my_lib.dir/main.cpp.o 
