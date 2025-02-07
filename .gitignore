@@ -96,3 +96,5 @@ _deps
 # Flags for Clang Code Model
 *.cxxflags
 *.cflags
+
+.DS_Store

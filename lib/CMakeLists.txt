@@ -5,13 +5,13 @@ project(lib)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(lib main.cpp)
-
-#add_library(lib SHARED main.cpp)
-target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(mylib SHARED
+    lib.h
+    lib.cpp)
+target_include_directories(mylib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 include(GNUInstallDirs)
-install(TARGETS lib
+install(TARGETS mylib
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
