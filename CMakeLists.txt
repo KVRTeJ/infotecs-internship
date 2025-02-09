@@ -8,14 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(PROJECTS
 lib
 program-1
+program-2
 )
 
 foreach(PROJECT ${PROJECTS})
     add_subdirectory(${PROJECT})
 endforeach()
-
-#add_custom_target(RunAllPrograms
-#    COMMAND $<TARGET_FILE:lib>
-#    COMMAND $<TARGET_FILE:program-1>
-#    DEPENDS ${PROJECTS}
-#)
