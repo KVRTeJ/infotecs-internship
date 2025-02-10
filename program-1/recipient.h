@@ -1,28 +1,29 @@
 #ifndef RECIPIENT_H
 #define RECIPIENT_H
 
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-
 #include "lib.h"
+#include "idispatcher.h"
 
 class Recipient {
 public:
-    explicit Recipient(std::condition_variable cv)
-        :m_cv(cv)
-    {}
+    Recipient() = default;
+
+    void attach(IDispatcher* observer) {m_observer = observer;}
+    void detach() {m_observer = nullptr;}
+    void notify();
+
+    void input();
 
     bool isValid() const;
 
-    bool start();
+    void operator()();
 
     Recipient(const Recipient& other) = delete;
     Recipient& operator = (const Recipient& other) = delete;
 
 private:
     std::string m_data = {};
-    std::condition_variable m_cv = {};
+    IDispatcher* m_observer = nullptr;
 };
 
 #endif // RECIPIENT_H

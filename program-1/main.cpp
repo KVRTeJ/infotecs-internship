@@ -8,7 +8,9 @@
 
 int main() {
 
+    Recipient boo;
 
+    boo();
 
     return 0;
 }
