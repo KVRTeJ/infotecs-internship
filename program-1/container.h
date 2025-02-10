@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 #include <mutex>
+#include <thread>
+#include <chrono>
 
 template <typename Type>
 class Container {
@@ -12,6 +14,7 @@ public:
         std::lock_guard<std::mutex> lock(m_mutex);
 
         m_data.push_back(value);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     Type pop() {
