@@ -5,7 +5,9 @@ project(program-1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(program-1 main.cpp)
+add_executable(program-1 main.cpp
+    container.h
+)
 target_link_libraries(program-1 lib)
 
 include(GNUInstallDirs)
