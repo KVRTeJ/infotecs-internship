@@ -32,8 +32,7 @@ void Recipient::operator()() {
 
         if(isValid()) {
             sortAndReplace(m_data);
-            std::cout << m_data;
-            //notify();
+            notify();
         }
     }
 }

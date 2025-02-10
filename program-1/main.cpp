@@ -6,11 +6,13 @@
 #include "lib.h"
 #include "recipient.h"
 
+#include "dispatcher.h"
+
 int main() {
 
-    Recipient boo;
+    Dispatcher boo;
 
-    boo();
+    boo.start();
 
     return 0;
 }
