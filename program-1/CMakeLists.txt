@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(program-1 main.cpp
     container.h
     recipient.h recipient.cpp
+
+    dispatcher.h dispatcher.cpp
+    idispatcher.h
+
 )
 target_link_libraries(program-1 lib)
 
