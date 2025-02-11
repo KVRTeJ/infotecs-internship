@@ -1,12 +1,12 @@
 #include "dispatcher.h"
 
+#include <thread>
+
 void Dispatcher::start() {
-    Recipient foo;
-    foo.attach(this);
+    Recipient hostInputClass;
+    hostInputClass.attach(this);
 
-    foo();
+    std::thread input(hostInputClass);
 
-    // std::thread inp(foo);
-
-    // inp.join();
+    input.detach();
 }

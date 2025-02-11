@@ -18,9 +18,6 @@ public:
 
     void operator()();
 
-    Recipient(const Recipient& other) = delete;
-    Recipient& operator = (const Recipient& other) = delete;
-
 private:
     std::string m_data = {};
     IDispatcher* m_observer = nullptr;
