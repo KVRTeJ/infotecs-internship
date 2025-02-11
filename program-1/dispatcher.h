@@ -12,7 +12,7 @@ public:
     void update(const std::string& message) override {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        buffer.add(message);
+        m_buffer.add(message);
         std::cout << "buffer addedd" << std::endl;
 
         lock.unlock();
@@ -28,7 +28,7 @@ private:
     std::mutex m_mutex;
     std::condition_variable m_condition_variable;
 
-    Container<std::string> buffer = {};
+    Container<std::string> m_buffer = {};
 };
 
 #endif // DISPATCHER_H

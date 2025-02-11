@@ -3,17 +3,21 @@
 #include <thread>
 
 void Dispatcher::sender() {
-    std::unique_lock<std::mutex> lock(m_mutex);
 
-    std::cout << "sender wait" << std::endl;
-    bool hasData = !buffer.empty();
-    m_condition_variable.wait(lock, [&hasData]{
-        std::cout << "until wait" << (hasData ? "\ttrue\t" : "\tfalse\t") << std::endl;
-        return hasData;
-    });
+    for(;;) {
+        std::unique_lock<std::mutex> lock(m_mutex);
 
-    std::cout << "sender started" << std::endl;
+        std::cout << "sender wait" << std::endl;
 
+        m_condition_variable.wait(lock, [this]{
+            //std::cout << "until wait" << (!m_buffer.empty() ? "\ttrue\t" : "\tfalse\t") << std::endl;
+            return !m_buffer.empty();
+            // return hasData;
+        });
+
+        std::cout << "sender started" << std::endl;
+        std::cout << m_buffer.pop() << " processed.\n" << std::endl;
+    }
 }
 
 void Dispatcher::start() {
