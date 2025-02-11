@@ -9,12 +9,10 @@ class Dispatcher : public IDispatcher {
 public:
     Dispatcher() = default;
     virtual ~Dispatcher() = default;
+
     void update(const std::string& message) override {
         std::unique_lock<std::mutex> lock(m_mutex);
-
         m_buffer.add(message);
-        std::cout << "buffer addedd" << std::endl;
-
         lock.unlock();
 
         m_condition_variable.notify_one();

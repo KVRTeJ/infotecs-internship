@@ -7,16 +7,16 @@ void Dispatcher::sender() {
     for(;;) {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        std::cout << "sender wait" << std::endl;
-
         m_condition_variable.wait(lock, [this]{
-            //std::cout << "until wait" << (!m_buffer.empty() ? "\ttrue\t" : "\tfalse\t") << std::endl;
             return !m_buffer.empty();
-            // return hasData;
         });
 
-        std::cout << "sender started" << std::endl;
-        std::cout << m_buffer.pop() << " processed.\n" << std::endl;
+        std::string data = m_buffer.pop();
+        std::cout << data <<std::endl;
+
+        std::string output = std::to_string(getSumNumbers(data));
+        std::cout << output << std::endl; //TODO: remove
+
     }
 }
 
@@ -25,6 +25,9 @@ void Dispatcher::start() {
     baseInputClass.attach(this);
 
     std::thread input(baseInputClass);
+
+    //TODO: start server
+
     std::thread output(&Dispatcher::sender, this);
 
     input.join();

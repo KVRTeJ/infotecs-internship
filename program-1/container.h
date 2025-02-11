@@ -7,6 +7,8 @@
 template <typename Type>
 class Container {
 public:
+    Container() = default;
+
     void add(const Type& value) {
         m_data.push_back(value);
     }
