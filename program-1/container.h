@@ -25,6 +25,11 @@ public:
     Type get() const {
         return m_data.front();;
     }
+
+    bool empty() const {
+        return m_data.empty();
+    }
+
 private:
     std::list<Type> m_data = {};
 };

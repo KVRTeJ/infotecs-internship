@@ -11,14 +11,16 @@ public:
     virtual ~Dispatcher() = default;
     void update(const std::string& message) override {
         std::unique_lock<std::mutex> lock(m_mutex);
-        buffer.add(message);
 
-        std::cout << buffer.pop() << std::endl;
+        buffer.add(message);
+        std::cout << "buffer addedd" << std::endl;
 
         lock.unlock();
+
+        m_condition_variable.notify_one();
     }
 
-    // void sender();
+    void sender(); //TODO:implementme
 
     void start();
 
