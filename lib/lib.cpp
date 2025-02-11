@@ -19,9 +19,11 @@ void sortAndReplace(std::string& input) {
 int getSumNumbers(const std::string& input) {
     int result = 0;
 
-    for(char i : input) {
-        if(i >= '0' && i <= '9') {
-            result += i - '0';
+    for(int i = 0; i < input.length(); ++i) {
+        if(input[i] >= '0' && input[i] <= '9') {
+            result += input[i] - '0';
+        } else {
+            ++i;
         }
     }
 
