@@ -11,6 +11,7 @@ add_executable(program-1 main.cpp
     dispatcher.h dispatcher.cpp
     idispatcher.h
     client.h
+    iclient.h
 
 )
 target_link_libraries(program-1 lib)
