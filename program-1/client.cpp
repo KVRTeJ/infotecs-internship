@@ -25,12 +25,12 @@ bool Client::connect() {
 
     m_socket = socket(AF_INET, SOCK_STREAM, 0);
     if(m_socket == -1) {
-        std::cerr << "Error creating socket." << std::endl;
+        if(showErrorMessages) std::cerr << "Error creating socket." << std::endl;
         return false;
     }
 
     if((::connect(m_socket, reinterpret_cast<const sockaddr*>(&m_address), sizeof(m_address))) < 0) {
-        std::cerr << "Server connection error." << std::endl;
+        if(showErrorMessages) std::cerr << "Server connection error." << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
         return false;
     }
@@ -62,7 +62,7 @@ bool Client::send(const std::string& message) {
 
     int size = ::send(m_socket, message.c_str(), message.length(), MSG_NOSIGNAL);
     if(size <= 0) {
-        std::cerr << "Data send error. Try to reconnect. . ." << std::endl;
+        if(showErrorMessages) std::cerr << "Data send error. Try to reconnect. . ." << std::endl;
         reconnect();
         return false;
     }
