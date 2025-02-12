@@ -12,6 +12,7 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+
 #include <cstring>
 
 #include "iclient.h"
@@ -26,6 +27,7 @@ public:
     void setIp(const std::string& ip) override;
     void setErrorMessagesVision(const bool value) {showErrorMessages = value;}
 
+    bool connected() const override {return isConnected;}
     int getPort() const override {return m_port;}
     std::string getIp() const override {return m_ip;}
     bool getErrorMessagesVision() const {return showErrorMessages;}

@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <unistd.h>
+
 #include <cstring>
 #include <string.h>
 
@@ -29,8 +30,7 @@ class Server {
     };
 
 public:
-    Server(int port, std::function<void(std::string message)> handler = nullptr) : m_port(port), m_handler(handler)
-    {}
+    Server(int port, std::function<void(std::string message)> handler = nullptr) : m_port(port), m_handler(handler) {}
 
     void setPort(const int port);
     int getPort() const {return m_port;}
@@ -57,12 +57,5 @@ private:
     Client m_client;
 
 };
-
-// struct Server::Client {
-//     sockaddr_in address;
-//     Socket socket;
-
-//     Server::Status status = Status::OFF;
-// };
 
 #endif // SERVER_H

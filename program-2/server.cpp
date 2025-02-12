@@ -46,6 +46,7 @@ void Server::dataLoop() {
     char buffer[BUFFER_SIZE];
 
     for(;;) {
+        memset(buffer, 0, BUFFER_SIZE);
         int size = read(m_client.socket, buffer, BUFFER_SIZE);
         if(size <= 0) {
             std::cout << "Data read error. Try ro reconnect. . ." << std::endl;
@@ -55,7 +56,6 @@ void Server::dataLoop() {
 
         m_handler(buffer);
 
-        memset(buffer, 0, BUFFER_SIZE);
     }
 }
 
@@ -88,6 +88,7 @@ void Server::disconnectClient() {
 
 bool Server::reconnectClient() {
     disconnectClient();
+
     return connectClient();
 }
 

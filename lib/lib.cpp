@@ -31,5 +31,5 @@ int getSumNumbers(const std::string& input) {
 }
 
 bool analyse(const std::string& input) {
-    return (input.length() > 2) && !(input.length() % 32);
+    return (input.length() > 2) && !(std::stoi(input) % 32);
 }

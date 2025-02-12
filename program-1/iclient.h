@@ -10,6 +10,7 @@ public:
     virtual void setPort(const int port) = 0;
     virtual void setIp(const std::string& ip) = 0;
 
+    virtual bool connected() const = 0;
     virtual int getPort() const = 0;
     virtual std::string getIp() const = 0;
 

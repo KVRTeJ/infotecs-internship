@@ -2,10 +2,22 @@
 
 #include <thread>
 
+void Dispatcher::setClient(IClient* client) {
+    if(!client) {
+        return;
+    }
+
+    m_client = client;
+}
+
 void Dispatcher::sender() {
 
     for(;;) {
         std::unique_lock<std::mutex> lock(m_mutex);
+
+        while(m_buffer.empty() && !m_client->connected()) {
+            m_client->connect();
+        }
 
         m_condition_variable.wait(lock, [this]{
             return !m_buffer.empty();
@@ -15,9 +27,10 @@ void Dispatcher::sender() {
         std::cout << data <<std::endl;
 
         std::string output = std::to_string(getSumNumbers(data));
-        std::cout << output << std::endl; //TODO: remove
 
-
+        if(m_client) {
+            while(!m_client->send(output));
+        }
     }
 }
 
@@ -27,7 +40,9 @@ void Dispatcher::start() {
 
     std::thread input(baseInputClass);
 
-    //TODO: start server
+    if(m_client) {
+        m_client->connect();
+    }
 
     std::thread output(&Dispatcher::sender, this);
 

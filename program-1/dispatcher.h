@@ -8,7 +8,7 @@
 
 class Dispatcher : public IDispatcher {
 public:
-    Dispatcher() = default;
+    Dispatcher(IClient* client = nullptr) : m_client(client) {}
     ~Dispatcher() override = default;
 
     void update(const std::string& message) override {
@@ -19,7 +19,10 @@ public:
         m_condition_variable.notify_one();
     }
 
-    void sender(); //TODO:implementme
+    void setClient(IClient* client);
+    IClient* getClient() const {return m_client;}
+
+    void sender();
 
     void start();
 
@@ -28,6 +31,8 @@ private:
     std::condition_variable m_condition_variable;
 
     Container<std::string> m_buffer = {};
+
+    IClient* m_client = nullptr;
 };
 
 #endif // DISPATCHER_H
