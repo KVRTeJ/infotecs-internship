@@ -8,8 +8,15 @@
 
 #include "dispatcher.h"
 
+#include "client.h"
+
 int main() {
 
+    Client foo(5252);
+    foo.connectTo();
+
+
+    return -1;
     Dispatcher boo;
 
     boo.start();

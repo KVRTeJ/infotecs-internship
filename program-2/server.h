@@ -2,10 +2,12 @@
 #define SERVER_H
 
 #include<list>
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <unistd.h>
+#include <cstring>
 
 #include "lib.h"
 
@@ -18,7 +20,7 @@ class Server {
     };
 
     struct Client {
-        sockaddr_in address;
+        struct sockaddr_in address;
         Socket socket;
 
         Server::Status status = Status::OFF;
@@ -36,21 +38,40 @@ public:
         m_address.sin_family = AF_INET;
 
         m_socket = socket(AF_INET, SOCK_STREAM, 0);
+        if(m_socket == -1) {
+            //TODO:Message
+            return Status::OFF;
+        }
 
-        bind(m_socket, (struct sockaddr*)&m_address, sizeof(m_address));
+        if(bind(m_socket, (struct sockaddr*)&m_address, sizeof(m_address)) < 0) {
+            //TODO:Message
+            return Status::OFF;
+        }
 
-        listen(m_socket, SOMAXCONN);
+
+        if(listen(m_socket, SOMAXCONN) < 0) {
+            //TODO:Message
+            return Status::OFF;
+        }
 
         m_status = Status::ON;
+        std::cout << "Server started" << std::endl;
 
         m_client.socket = accept(m_socket, (struct sockaddr*)&m_client.address, &addressSize);
 
+        char buffer[1024];
+        recv(m_client.socket, buffer, 1024, 0);
+
+        std::cout << buffer << std::endl;
+
+
+        std::cout << "Server stoped" << std::endl;
     }
 
 private:
     Status m_status = Status::OFF;
 
-    sockaddr_in m_address;
+    struct sockaddr_in m_address;
     Socket m_socket = -1;
     int m_port = -1;
 

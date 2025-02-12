@@ -10,6 +10,7 @@ add_executable(program-1 main.cpp
     recipient.h recipient.cpp
     dispatcher.h dispatcher.cpp
     idispatcher.h
+    client.h
 
 )
 target_link_libraries(program-1 lib)
