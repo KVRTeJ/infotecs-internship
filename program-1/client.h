@@ -1,6 +1,11 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <iostream>
+#include <string>
+
+#include <thread>
+#include <chrono>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -9,37 +14,37 @@
 #include <unistd.h>
 #include <cstring>
 
+#include "iclient.h"
 
-class Client {
+class Client : public IClient {
     using Socket = int;
 public:
-    Client(int port) : m_port(port) {}
+    Client(std::string ip, int port, bool errorMessagesVision = false) : m_ip(ip), m_port(port), showErrorMessages(errorMessagesVision) {}
+    ~Client() override = default;
 
-    void connectTo() {
-        socklen_t addressSize = sizeof(m_address);
+    void setPort(const int port) override;
+    void setIp(const std::string& ip) override;
+    void setErrorMessagesVision(const bool value) {showErrorMessages = value;}
 
-        m_address.sin_port = htons(m_port);
-        m_address.sin_family = AF_INET;
-        inet_pton(AF_INET, "127.0.0.1", &(m_address.sin_addr));
+    int getPort() const override {return m_port;}
+    std::string getIp() const override {return m_ip;}
+    bool getErrorMessagesVision() const {return showErrorMessages;}
 
-        m_socket = socket(AF_INET, SOCK_STREAM, 0);
+    bool connect() override;
+    void disconnect() override;
+    bool reconnect();
 
-        if(connect(m_socket, (struct sockaddr*)&m_address, sizeof(m_address)) < 0) {
-            std::cout << "err connect to server" << std::endl;
-        }
-
-        const char* message = "Hello, Server!";
-
-        send(m_socket, message, strlen(message), 0);
-
-    }
-
-
+    bool send(const std::string& message) override;
 
 private:
+    bool showErrorMessages = false;
+    bool isConnected = false;
+
     struct sockaddr_in m_address;
     Socket m_socket = -1;
+
     int m_port = -1;
+    std::string m_ip = "";
 };
 
 #endif // CLIENT_H

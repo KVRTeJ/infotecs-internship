@@ -4,11 +4,12 @@
 #include "container.h"
 #include "idispatcher.h"
 #include "recipient.h"
+#include "iclient.h"
 
 class Dispatcher : public IDispatcher {
 public:
     Dispatcher() = default;
-    virtual ~Dispatcher() = default;
+    ~Dispatcher() override = default;
 
     void update(const std::string& message) override {
         std::unique_lock<std::mutex> lock(m_mutex);

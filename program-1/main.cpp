@@ -12,8 +12,16 @@
 
 int main() {
 
-    Client foo(5252);
-    foo.connectTo();
+    Client foo("127.0.0.1", 5252);
+
+
+    foo.connect();
+
+    for(;;) {
+        foo.send("test");
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
+
 
 
     return -1;

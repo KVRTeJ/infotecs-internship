@@ -17,6 +17,7 @@ void Dispatcher::sender() {
         std::string output = std::to_string(getSumNumbers(data));
         std::cout << output << std::endl; //TODO: remove
 
+
     }
 }
 
