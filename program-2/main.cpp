@@ -8,9 +8,11 @@
 
 int main() {
 
-    Server boo(5252);
+    Server boo(5252, [](std::string message) {
+        std::cout << "handler checked msg - " << message << std::endl;
+    });
 
     boo.start();
 
-    return 0;
+    return -1;
 }

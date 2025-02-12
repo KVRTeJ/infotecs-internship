@@ -2,12 +2,14 @@
 #define SERVER_H
 
 #include<list>
+#include <functional>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <unistd.h>
 #include <cstring>
+#include <string.h>
 
 #include "lib.h"
 
@@ -27,48 +29,25 @@ class Server {
     };
 
 public:
-    Server(int port) : m_port(port)
+    Server(int port, std::function<void(std::string message)> handler = nullptr) : m_port(port), m_handler(handler)
     {}
 
-    Status start() {
-        socklen_t addressSize = sizeof(m_address);
+    void setPort(const int port);
+    int getPort() const {return m_port;}
+    Status getStatus() const {return m_status;}
 
-        m_address.sin_addr.s_addr = INADDR_ANY;
-        m_address.sin_port = htons(m_port);
-        m_address.sin_family = AF_INET;
+    Status start();
+    void dataLoop();
 
-        m_socket = socket(AF_INET, SOCK_STREAM, 0);
-        if(m_socket == -1) {
-            //TODO:Message
-            return Status::OFF;
-        }
+    bool connectClient();
+    void disconnectClient();
+    bool reconnectClient();
 
-        if(bind(m_socket, (struct sockaddr*)&m_address, sizeof(m_address)) < 0) {
-            //TODO:Message
-            return Status::OFF;
-        }
+    void stop();
 
-
-        if(listen(m_socket, SOMAXCONN) < 0) {
-            //TODO:Message
-            return Status::OFF;
-        }
-
-        m_status = Status::ON;
-        std::cout << "Server started" << std::endl;
-
-        m_client.socket = accept(m_socket, (struct sockaddr*)&m_client.address, &addressSize);
-
-        char buffer[1024];
-        recv(m_client.socket, buffer, 1024, 0);
-
-        std::cout << buffer << std::endl;
-
-
-        std::cout << "Server stoped" << std::endl;
-    }
-
+    static const int BUFFER_SIZE = 128;
 private:
+    std::function<void(std::string message)> m_handler;
     Status m_status = Status::OFF;
 
     struct sockaddr_in m_address;
@@ -76,6 +55,7 @@ private:
     int m_port = -1;
 
     Client m_client;
+
 };
 
 // struct Server::Client {
